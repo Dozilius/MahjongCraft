@@ -27,8 +27,10 @@ class PlayerFaceIcon(
 
     private fun loadGameProfileProperties() {
         coroutineScope.launch(Dispatchers.IO) {
-            val profile = SkullBlockEntity.fetchProfileByUuid(uuid).get().getOrNull()
-                ?: SkullBlockEntity.fetchProfileByName(name).get().getOrNull()
+            val profile = runCatching {
+                SkullBlockEntity.fetchProfileByUuid(uuid).join().orElse(null)
+                    ?: SkullBlockEntity.fetchProfileByName(name).join().orElse(null)
+            }.getOrNull()
             if (profile != null) gameProfile = profile
         }
     }
