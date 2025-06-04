@@ -564,7 +564,7 @@ abstract class MahjongPlayerBase : GamePlayer {
         tile: Tile, discards: List<Tile>,
         machi: List<Tile> = this.machi.map { it.mahjong4jTile },
     ): Boolean {
-        val discardedTiles = discardedTiles.map { it.mahjong4jTile }
+        val discardedTiles = this.discardedTiles.map { it.mahjong4jTile }
         if (tile in discardedTiles) return true //一般振聽
         //考慮同巡振聽
         val lastDiscard = discardedTiles.last() //玩家丟過的最後一張牌
